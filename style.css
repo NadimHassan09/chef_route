@@ -997,12 +997,18 @@ main section#menu .menu-book-btn:hover {
         justify-content: flex-start;
     }
     main section#menu .menu-coverflow {
-        height: 60vh;
+        height: auto;
+        min-height: 320px;
     }
     main section#menu .menu-coverflow-slide {
-        width: clamp(160px, 55vw, 260px);
-        height: clamp(220px, 50vh, 380px);
-        margin: 0 -2rem;
+        width: clamp(180px, 50vw, 260px);
+        height: auto;
+        aspect-ratio: 712 / 562;
+        max-height: 380px;
+        margin: 0 -1rem;
+    }
+    main section#menu .menu-coverflow-slide.is-hidden {
+        display: none;
     }
 }
 
@@ -1262,15 +1268,61 @@ footer a.footer-social:hover {
         font-size: 0.65rem;
     }
 
+    main section#menu {
+        content-visibility: visible;
+    }
+
+    main section#menu .menu-layout-slider {
+        overflow: hidden;
+        width: 100%;
+    }
+
     main section#menu .menu-coverflow {
-        height: 50vh;
-        min-height: 280px;
+        height: auto;
+        min-height: 300px;
+        max-height: none;
+        padding: 0.75rem 0 1rem;
+    }
+
+    main section#menu .menu-coverflow-viewport {
+        width: 100%;
+        max-width: 100%;
+        touch-action: manipulation;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    main section#menu .menu-coverflow-track {
+        min-height: 0;
+        width: min(88vw, 300px);
+        max-width: 100%;
+        margin: 0 auto;
+        justify-content: center;
+        transform: none !important;
+        transition: none !important;
     }
 
     main section#menu .menu-coverflow-slide {
-        width: clamp(140px, 62vw, 220px);
-        height: clamp(200px, 45vh, 320px);
-        margin: 0 -1.25rem;
+        width: 100%;
+        height: auto;
+        aspect-ratio: 712 / 562;
+        max-height: 360px;
+        margin: 0;
+        flex: 0 0 100%;
+    }
+
+    main section#menu .menu-coverflow-slide.is-side,
+    main section#menu .menu-coverflow-slide.is-hidden {
+        display: none !important;
+    }
+
+    main section#menu .menu-coverflow-slide.is-active {
+        display: block;
+        filter: none;
+        transform: none;
+        opacity: 1;
+        margin: 0;
     }
 
     main section#menu .menu-book-btn {

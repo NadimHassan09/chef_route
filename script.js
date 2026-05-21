@@ -187,6 +187,11 @@
     let intervalId = null;
     let isAnimating = false;
     const intervalMs = 4000;
+    const mobileQuery = window.matchMedia('(max-width: 767.98px)');
+
+    function isMobileSlider() {
+        return mobileQuery.matches;
+    }
 
     let firstImagePrimed = false;
 
@@ -269,8 +274,17 @@
     }
 
     function render(animate) {
-        setTransitionEnabled(animate && !reducedMotion);
         applySlideStates();
+
+        if (isMobileSlider()) {
+            setTransitionEnabled(false);
+            track.style.transform = 'translateX(0)';
+            maybePreloadFirstForLoop();
+            return;
+        }
+
+        setTransitionEnabled(animate && !reducedMotion);
+        void track.offsetHeight;
         track.style.transform = `translateX(${centerOffsetFor(positionIndex)}px)`;
         maybePreloadFirstForLoop();
     }
@@ -309,7 +323,16 @@
         positionIndex += 1;
         render(true);
 
-        if (reducedMotion) snapIfClone();
+        if (reducedMotion || isMobileSlider()) snapIfClone();
+    }
+
+    function prev() {
+        if (isAnimating) return;
+        isAnimating = true;
+        positionIndex -= 1;
+        render(true);
+
+        if (reducedMotion || isMobileSlider()) snapIfClone();
     }
 
     function onTransitionEnd(e) {
@@ -356,16 +379,56 @@
         });
     });
 
-    window.addEventListener('resize', () => {
+    function onResize() {
         isAnimating = false;
         render(false);
+    }
+
+    let resizeTimer;
+    window.addEventListener('resize', () => {
+        clearTimeout(resizeTimer);
+        resizeTimer = setTimeout(onResize, 100);
     });
+
+    if (typeof ResizeObserver !== 'undefined') {
+        const ro = new ResizeObserver(() => onResize());
+        ro.observe(viewport);
+    }
+
+    mobileQuery.addEventListener('change', onResize);
+
+    let touchStartX = 0;
+    let touchStartY = 0;
+    viewport.addEventListener(
+        'touchstart',
+        (e) => {
+            touchStartX = e.changedTouches[0].clientX;
+            touchStartY = e.changedTouches[0].clientY;
+        },
+        { passive: true }
+    );
+    viewport.addEventListener(
+        'touchend',
+        (e) => {
+            const dx = e.changedTouches[0].clientX - touchStartX;
+            const dy = e.changedTouches[0].clientY - touchStartY;
+            if (Math.abs(dx) < 40 || Math.abs(dx) < Math.abs(dy)) return;
+            if (dx < 0) next();
+            else prev();
+        },
+        { passive: true }
+    );
 
     render(false);
     requestAnimationFrame(() => {
         render(false);
-        startAutoplay();
+        requestAnimationFrame(() => {
+            onResize();
+            startAutoplay();
+        });
     });
+
+    window.addEventListener('load', onResize);
     preloadRemainingImages();
 })();
 
