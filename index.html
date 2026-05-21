@@ -4,8 +4,13 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chef Route</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bona+Nova:ital,wght@0,400;0,700;1,400&family=Ibarra+Real+Nova:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Jost:ital,wght@0,400;0,500;0,600;0,700&family=Open+Sans:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer">
     <link rel="stylesheet" href="style.css">
+    <link rel="preload" as="image" href="assets/images/interior/hero.webp" type="image/webp">
 
 </head>
 <body>
@@ -32,7 +37,7 @@
           <a class="nav-link " aria-current="page" href="#specialties">Specialties</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link " aria-current="page" href="#reservations">Reservations</a>
+          <a class="nav-link " aria-current="page" href="#menu">Menu</a>
         </li>
       </ul>
     </div>
@@ -40,12 +45,12 @@
         </nav>
     </header>
     <main>
-        <section id="home" class="my-3">
+        <section id="home">
             <div class="container">
                 <div class="text-center p-3 ">
-                    <h1 class="display-1"><span>Chef Route</span> Luxury Bus Restaurant</h1>
+                    <h1 class="display-1"><span>Chef Route</span> Mobile Fine dining Bus</h1>
             <p class="fs-5">Embark on a gastronomic journey where elegance meets the road</p>
-            <a href="#reservations" class="button">Reserve Your Table</a>
+            <a href="booking.html" class="button">Reserve Your Table</a>
             <div class="arrow-down">
                 <svg width="40" height="40" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
                     <path d="M12 5V19M12 19L19 12M12 19L5 12" stroke="#D4AF37" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
@@ -64,7 +69,7 @@
                         <a href="#concept" class="button">View Concept</a>
                     </div>
                     <div class="col-lg-6">
-                        <img src="img.jpg" alt="Bus Restaurant" class="img-fluid">
+                        <img src="img.webp" alt="Bus Restaurant" class="img-fluid about-showcase-img" width="1400" height="763" loading="lazy" decoding="async">
                     </div>
                 </div>
             </div>
@@ -77,7 +82,7 @@
                         <div class="card" >
                         <div class="card-body">
                             <h5 class="card-title">First in Alexandria</h5>
-                            <p class="card-text">Buscencia is the pioneering luxury bus-restaurant in Alexandria, Egypt, introducing a revolutionary dining experience that combines mobility with sophistication.</p>
+                            <p class="card-text">Chef Route is the pioneering luxury bus-restaurant in Alexandria, Egypt, introducing a revolutionary dining experience that combines mobility with sophistication.</p>
                         </div>
                         </div>
                     </div>
@@ -142,43 +147,132 @@
                 </div>
             </div>
         </section>
-        <section id="reservations" class="my-5">
+        <section id="chefs" class="my-5">
             <div class="container">
-                <div class="row">
-                    <div class="col-8 mx-auto">
-                        <h2 class="display-6 text-center">Book Your <span>Experience</span></h2>
-                        <form class="mx-auto " id="reservationForm" action="">
-                            <div class="form-group">
-                    <label for="name">Full Name</label>
-                    <input type="text" id="name" name="name" required>
-                             </div>
-                            <div class="form-group">
-                                <label for="email">Email Address</label>
-                                <input type="email" id="email" name="email" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="date">Date</label>
-                                <input type="date" id="date" name="date" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="time">Time</label>
-                                <select id="time" name="time" required>
-                                    <option value="">Select a time</option>
-                                    <option value="lunch">Lunch</option>
-                                    <option value="dinner">Dinner</option>
-                                </select>
-                            </div>
-                            <div class="form-group">
-                                <label for="guests">Number of Guests</label>
-                                <input type="number" id="guests" name="guests" min="1" max="4" required>
-                            </div>
-                            <div class="form-group">
-                                <label for="message">Special Requests</label>
-                                <textarea id="message" name="message" placeholder="Tell us about any special preferences..."></textarea>
-                            </div>
-                            <button type="submit" class="submit-btn ">Confirm Reservation</button>
-                        </form>
+                <div class="row g-5 align-items-center">
+                    <div class="col-lg-6">
+                        <img src="assets/images/interior/11.webp" alt="World-class chefs at Chef Route" class="img-fluid chefs-showcase-img" width="1400" height="763" loading="lazy" decoding="async">
                     </div>
+                    <div class="col-lg-6">
+                        <h2 class="display-6">World Class <span>Chefs</span></h2>
+                        <p>At Chef Route, every plate is shaped by culinary masters trained in the world’s finest kitchens. Our chefs bring Michelin-level technique, creativity, and precision to a mobile fine-dining setting unlike anything else in Alexandria.</p>
+                        <p>From seasonal tasting menus to bespoke pairings, they transform premium ingredients into artful dishes—elevating each journey with flavors that are bold, refined, and unforgettable.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section id="menu" class="my-5">
+            <div class="container">
+                <h2 class="display-6 text-center">Our <span>Menu</span></h2>
+                <div class="menu-layout">
+                    <div class="menu-layout-menu">
+                        <div class="menu-panel">
+                            <h3 class="menu-set-title">Set Menu</h3>
+                            <div class="menu-panel-content">
+                            <div class="menu-category">
+                                <h4 class="menu-category-title">Appetizers</h4>
+                                <div class="menu-dish">
+                                    <p class="menu-dish-name">Tuna and Avocado Tartare</p>
+                                    <p class="menu-dish-desc">Pickled onions, fresh herbs, and spicy ponzu sauce.</p>
+                                </div>
+                                <div class="menu-dish">
+                                    <p class="menu-dish-name">Sweet Potato Soup with White Miso Paste</p>
+                                    <p class="menu-dish-desc">Served with crispy kale and wholemeal sourdough bread.</p>
+                                </div>
+                            </div>
+
+                            <div class="menu-category">
+                                <h4 class="menu-category-title">Main Course</h4>
+                                <div class="menu-dish">
+                                    <p class="menu-dish-name">Pan-Fried Cod</p>
+                                    <p class="menu-dish-desc">Crushed baby new potatoes, roasted pak choï, leek, and umami sauce with roasted leeks.</p>
+                                </div>
+                                <div class="menu-dish">
+                                    <p class="menu-dish-name">Beef Tenderloin</p>
+                                    <p class="menu-dish-desc">Truffle Mashed Potatoes, Seasonal Vegetables and Beef Jus.</p>
+                                </div>
+                            </div>
+
+                            <div class="menu-category">
+                                <h4 class="menu-category-title">Desserts</h4>
+                                <div class="menu-dish">
+                                    <p class="menu-dish-name">Brie Cheese</p>
+                                    <p class="menu-dish-desc">Baby lettuce jam, apple and pear chutney, and classic homemade focaccia.</p>
+                                </div>
+                                <div class="menu-dish">
+                                    <p class="menu-dish-name">Tiramisù Sphere</p>
+                                </div>
+                            </div>
+
+                            <div class="menu-category">
+                                <h4 class="menu-category-title">Beverage</h4>
+                                <ul class="menu-beverage-list">
+                                    <li>1 Glass of Fresh Orange &amp; Ginger Juice</li>
+                                    <li>2 Glasses of Non-Alcoholic Wine (Red / White)</li>
+                                    <li>75 cl Still or Sparkling Water</li>
+                                    <li>Coffee or Tea</li>
+                                </ul>
+                            </div>
+                            </div>
+
+                            <p class="menu-footer-note">All prices are in Egyptian pounds and include service charge and applicable taxes.</p>
+                        </div>
+                    </div>
+                    <div class="menu-layout-slider">
+                        <div class="menu-coverflow" aria-label="Menu gallery" aria-live="polite">
+                            <div class="menu-coverflow-viewport">
+                                <div class="menu-coverflow-track">
+                                    <figure class="menu-coverflow-slide is-active">
+                                        <img src="assets/images/menu/1.webp" alt="Chef Route menu showcase 1" width="712" height="562" loading="lazy" decoding="async">
+                                    </figure>
+                                    <figure class="menu-coverflow-slide">
+                                        <img src="assets/images/menu/2.webp" alt="Chef Route menu showcase 2" width="712" height="562" loading="lazy" decoding="async">
+                                    </figure>
+                                    <figure class="menu-coverflow-slide">
+                                        <img src="assets/images/menu/3.webp" alt="Chef Route menu showcase 3" width="712" height="562" loading="lazy" decoding="async">
+                                    </figure>
+                                    <figure class="menu-coverflow-slide">
+                                        <img src="assets/images/menu/4.webp" alt="Chef Route menu showcase 4" width="712" height="562" loading="lazy" decoding="async">
+                                    </figure>
+                                    <figure class="menu-coverflow-slide">
+                                        <img src="assets/images/menu/5.webp" alt="Chef Route menu showcase 5" width="712" height="562" loading="lazy" decoding="async">
+                                    </figure>
+                                    <figure class="menu-coverflow-slide">
+                                        <img src="assets/images/menu/6.webp" alt="Chef Route menu showcase 6" width="712" height="562" loading="lazy" decoding="async">
+                                    </figure>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="text-center mt-4 pt-2">
+                    <a href="booking.html" class="menu-book-btn">Book Your Experience</a>
+                </div>
+            </div>
+        </section>
+        <section id="interior" class="my-5">
+            <div class="container">
+                <h2 class="display-6 text-center">Luxury <span>Interior</span></h2>
+                <p class="interior-intro text-center">Step inside Chef Route — where refined design, ambient lighting, and panoramic comfort create an unforgettable dining atmosphere on the move.</p>
+                <div class="interior-gallery" aria-label="Interior gallery">
+                    <figure class="interior-item interior-item-feature">
+                        <img src="assets/images/interior/1.webp" alt="Chef Route bus interior view 1" width="1600" height="1067" loading="lazy" decoding="async">
+                    </figure>
+                    <figure class="interior-item">
+                        <img src="assets/images/interior/2.webp" alt="Chef Route bus interior view 2" width="1600" height="1067" loading="lazy" decoding="async">
+                    </figure>
+                    <figure class="interior-item">
+                        <img src="assets/images/interior/3.webp" alt="Chef Route bus interior view 3" width="1600" height="1067" loading="lazy" decoding="async">
+                    </figure>
+                    <figure class="interior-item">
+                        <img src="assets/images/interior/4.webp" alt="Chef Route bus interior view 4" width="1600" height="1067" loading="lazy" decoding="async">
+                    </figure>
+                    <figure class="interior-item">
+                        <img src="assets/images/interior/5.webp" alt="Chef Route bus interior view 5" width="1600" height="1067" loading="lazy" decoding="async">
+                    </figure>
+                    <figure class="interior-item">
+                        <img src="assets/images/interior/6.webp" alt="Chef Route bus interior view 6" width="1600" height="898" loading="lazy" decoding="async">
+                    </figure>
                 </div>
             </div>
         </section>
@@ -190,29 +284,28 @@
                   <div class="row ">
                     <div class="col-4 ">
                         <h3 class="fs-5">Contact Us</h3>
-                        <p >📞 +1 (555) 123-4567</p>
-                        <p >✉️ info@Chef Route.com</p>
-                        <p >🌐 www.Chef Route.com</p>
+                        <p><i class="fa-solid fa-phone footer-contact-icon" aria-hidden="true"></i> +1 (555) 123-4567</p>
+                        <p><i class="fa-solid fa-envelope footer-contact-icon" aria-hidden="true"></i> info@Chef Route.com</p>
+                        <p><i class="fa-solid fa-globe footer-contact-icon" aria-hidden="true"></i> www.Chef Route.com</p>
                     </div>
 
                     <div class="col-4">
                         <h3 class="fs-5">Opening Hours</h3>
-                        <p >Monday - Thursday: 5PM - 11PM</p>
-                        <p >Friday - Saturday: 5PM - 1AM</p>
-                        <p >Sunday: 5PM - 10PM</p>
+                        <p>Sunday – Friday (Saturday closed)</p>
+                        <p>Lunch: 2PM – 4PM</p>
+                        <p>Dinner: 8PM – 10PM</p>
                     </div>
 
                     <div class="col-4">
                         <h3 class="fs-5">Follow Us</h3>
-                        <p class=""><a href="#">Instagram</a></p>
-                        <p ><a href="#">Facebook</a></p>
-                        <p ><a href="#">LinkedIn</a></p>
+                        <p class=""><a href="#" class="footer-social">Instagram</a></p>
+                        <p ><a href="#" class="footer-social">Facebook</a></p>
                     </div>
                   </div>
                 </section>
                 <section class="lower-footer pt-3">
                     <div class="footer-bottom">
-                        <p>&copy; 2025 Chef Route Luxury Bus Restaurant. All rights reserved.</p>
+                        <p>&copy; 2026 Chef Route Mobile Fine dining Bus. All rights reserved.</p>
                     </div>
                 </section>
 

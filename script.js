@@ -137,3 +137,254 @@
         }
     }, 2000);
 })();
+
+/* Menu coverflow — seamless infinite loop */
+(function () {
+    const coverflow = document.querySelector('.menu-coverflow');
+    if (!coverflow) return;
+
+    const viewport = coverflow.querySelector('.menu-coverflow-viewport');
+    const track = coverflow.querySelector('.menu-coverflow-track');
+    const originals = [...coverflow.querySelectorAll('.menu-coverflow-slide')];
+    const count = originals.length;
+    if (!count || !viewport || !track) return;
+
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    originals.forEach((slide) => {
+        const img = slide.querySelector('img');
+        if (img) img.setAttribute('loading', 'eager');
+    });
+
+    function cloneSlide(slide, type) {
+        const clone = slide.cloneNode(true);
+        clone.dataset.clone = type;
+        clone.setAttribute('aria-hidden', 'true');
+        clone.removeAttribute('tabindex');
+        const img = clone.querySelector('img');
+        if (img) {
+            img.setAttribute('loading', 'eager');
+            img.decoding = 'async';
+        }
+        return clone;
+    }
+
+    const cloneLast = cloneSlide(originals[count - 1], 'prepend');
+    const cloneFirst = cloneSlide(originals[0], 'append');
+    track.insertBefore(cloneLast, originals[0]);
+    track.appendChild(cloneFirst);
+
+    const slides = [...track.querySelectorAll('.menu-coverflow-slide')];
+    const total = slides.length;
+    const FIRST_REAL = 1;
+    const LAST_REAL = count;
+    const CLONE_FIRST = count + 1;
+    const CLONE_LAST = 0;
+
+    let positionIndex = FIRST_REAL;
+    let paused = false;
+    let intervalId = null;
+    let isAnimating = false;
+    const intervalMs = 4000;
+
+    let firstImagePrimed = false;
+
+    function preloadFirstImage() {
+        if (firstImagePrimed) return;
+        const src = originals[0].querySelector('img')?.getAttribute('src');
+        if (!src) return;
+        firstImagePrimed = true;
+
+        const loader = new Image();
+        loader.src = src;
+
+        const firstImg = originals[0].querySelector('img');
+        const cloneFirstImg = slides[CLONE_FIRST]?.querySelector('img');
+        [firstImg, cloneFirstImg].forEach((img) => {
+            if (img?.decode) img.decode().catch(() => {});
+        });
+    }
+
+    function preloadRemainingImages() {
+        const firstSrc = originals[0].querySelector('img')?.getAttribute('src');
+        const sources = new Set();
+        slides.forEach((slide) => {
+            const src = slide.querySelector('img')?.getAttribute('src');
+            if (src && src !== firstSrc) sources.add(src);
+        });
+        sources.forEach((src) => {
+            const img = new Image();
+            img.src = src;
+        });
+    }
+
+    function maybePreloadFirstForLoop() {
+        if (positionIndex === LAST_REAL - 1) {
+            preloadFirstImage();
+        }
+    }
+
+    function getOffset(index) {
+        let offset = index - positionIndex;
+        if (offset > total / 2) offset -= total;
+        if (offset < -total / 2) offset += total;
+        return offset;
+    }
+
+    function getLogicalIndex(pos) {
+        if (slides[pos].dataset.clone === 'prepend') return count - 1;
+        if (slides[pos].dataset.clone === 'append') return 0;
+        return pos - 1;
+    }
+
+    function setTransitionEnabled(enabled) {
+        track.classList.toggle('no-transition', !enabled);
+    }
+
+    function centerOffsetFor(index) {
+        const slide = slides[index];
+        const viewportCenter = viewport.offsetWidth / 2;
+        const slideCenter = slide.offsetLeft + slide.offsetWidth / 2;
+        return viewportCenter - slideCenter;
+    }
+
+    function applySlideStates() {
+        slides.forEach((slide, i) => {
+            const offset = getOffset(i);
+            slide.classList.remove('is-active', 'is-side', 'is-hidden');
+            if (offset === 0) {
+                slide.classList.add('is-active');
+            } else if (Math.abs(offset) === 1) {
+                slide.classList.add('is-side');
+            } else {
+                slide.classList.add('is-hidden');
+            }
+        });
+
+        const activeSlide = slides[positionIndex];
+        if (!activeSlide.matches(':hover') && document.activeElement !== activeSlide) {
+            paused = false;
+        }
+    }
+
+    function render(animate) {
+        setTransitionEnabled(animate && !reducedMotion);
+        applySlideStates();
+        track.style.transform = `translateX(${centerOffsetFor(positionIndex)}px)`;
+        maybePreloadFirstForLoop();
+    }
+
+    function snapIfClone() {
+        const active = slides[positionIndex];
+        if (!active.dataset.clone) {
+            isAnimating = false;
+            return;
+        }
+
+        positionIndex = active.dataset.clone === 'append' ? FIRST_REAL : LAST_REAL;
+
+        setTransitionEnabled(false);
+        applySlideStates();
+        track.offsetHeight;
+        track.style.transform = `translateX(${centerOffsetFor(positionIndex)}px)`;
+
+        requestAnimationFrame(() => {
+            requestAnimationFrame(() => {
+                setTransitionEnabled(true);
+                isAnimating = false;
+            });
+        });
+    }
+
+    function goTo(logicalIndex) {
+        positionIndex = ((logicalIndex % count) + count) % count + FIRST_REAL;
+        isAnimating = false;
+        render(true);
+    }
+
+    function next() {
+        if (isAnimating) return;
+        isAnimating = true;
+        positionIndex += 1;
+        render(true);
+
+        if (reducedMotion) snapIfClone();
+    }
+
+    function onTransitionEnd(e) {
+        if (e.target !== track || e.propertyName !== 'transform') return;
+        if (positionIndex === CLONE_FIRST || positionIndex === CLONE_LAST) {
+            snapIfClone();
+        } else {
+            isAnimating = false;
+        }
+    }
+
+    function startAutoplay() {
+        if (reducedMotion || intervalId) return;
+        intervalId = setInterval(() => {
+            if (!paused) next();
+        }, intervalMs);
+    }
+
+    track.addEventListener('transitionend', onTransitionEnd);
+
+    slides.forEach((slide, i) => {
+        if (slide.dataset.clone) return;
+
+        const logical = getLogicalIndex(i);
+        slide.setAttribute('tabindex', '0');
+        slide.addEventListener('click', () => goTo(logical));
+        slide.addEventListener('keydown', (e) => {
+            if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                goTo(logical);
+            }
+        });
+        slide.addEventListener('mouseenter', () => {
+            if (slide.classList.contains('is-active')) paused = true;
+        });
+        slide.addEventListener('mouseleave', () => {
+            if (slide.classList.contains('is-active')) paused = false;
+        });
+        slide.addEventListener('focusin', () => {
+            if (slide.classList.contains('is-active')) paused = true;
+        });
+        slide.addEventListener('focusout', () => {
+            if (slide.classList.contains('is-active')) paused = false;
+        });
+    });
+
+    window.addEventListener('resize', () => {
+        isAnimating = false;
+        render(false);
+    });
+
+    render(false);
+    requestAnimationFrame(() => {
+        render(false);
+        startAutoplay();
+    });
+    preloadRemainingImages();
+})();
+
+/* Booking form → receipt page */
+(function () {
+    const form = document.getElementById('reservationForm');
+    if (!form) return;
+
+    form.addEventListener('submit', (event) => {
+        event.preventDefault();
+
+        const formData = new FormData(form);
+        const params = new URLSearchParams({
+            name: formData.get('name') || '',
+            email: formData.get('email') || '',
+            date: formData.get('date') || '',
+            time: formData.get('time') || '',
+            guests: formData.get('guests') || '1',
+        });
+
+        window.location.href = `receipt.html?${params.toString()}`;
+    });
+})();
