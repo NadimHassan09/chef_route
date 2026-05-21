@@ -8,6 +8,10 @@
     --font-body: 'Open Sans', sans-serif;
     --font-button: 'Jost', sans-serif;
 }
+html {
+    overflow-x: hidden;
+}
+
 body {
     background: #000000;
     color: var(--light-text);
@@ -109,6 +113,15 @@ body::after {
     75% {
         transform: translate(20px, 20px) scale(1.05);
         opacity: 0.85;
+    }
+}
+
+@keyframes smokeDriftMobile {
+    0%, 100% {
+        transform: translate(0, 0) scale(1);
+    }
+    50% {
+        transform: translate(8px, 6px) scale(1.03);
     }
 }
 
@@ -911,9 +924,9 @@ main section#menu .menu-coverflow-slide {
     margin: 0 -3.5rem;
     padding: 0;
     border-radius: 16px;
-    overflow: hidden;
+    overflow: visible;
     border: none;
-    background: #111;
+    background: transparent;
     box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
     filter: blur(10px);
     transform: scale(0.78);
@@ -959,6 +972,8 @@ main section#menu .menu-coverflow-slide img {
     object-fit: cover;
     display: block;
     pointer-events: none;
+    border-radius: 16px;
+    background: #111;
 }
 main section#menu .menu-book-btn {
     display: inline-block;
@@ -996,10 +1011,22 @@ main section#menu .menu-book-btn:hover {
         overflow: visible;
         justify-content: flex-start;
     }
+    main section#menu .menu-layout-slider {
+        overflow: visible;
+    }
+
     main section#menu .menu-coverflow {
         height: auto;
         min-height: 320px;
+        overflow: visible;
+        padding: 1rem 0.75rem 1.5rem;
     }
+
+    main section#menu .menu-coverflow-viewport {
+        overflow: visible;
+        padding: 0.5rem 0.5rem 1rem;
+    }
+
     main section#menu .menu-coverflow-slide {
         width: clamp(180px, 50vw, 260px);
         height: auto;
@@ -1202,6 +1229,50 @@ footer a.footer-social:hover {
 
 /* Mobile (≤767px) */
 @media (max-width: 767.98px) {
+    html,
+    body {
+        overflow-x: hidden;
+    }
+
+    /* Gold glow — bright cores off-screen, soft falloff visible inside viewport */
+    body::before {
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        opacity: 0.9;
+        background:
+            radial-gradient(ellipse 130vmax 95vmax at -8% 25%, rgba(212, 175, 55, 0.22) 0%, transparent 68%),
+            radial-gradient(ellipse 120vmax 90vmax at 108% 68%, rgba(255, 215, 0, 0.18) 0%, transparent 68%),
+            radial-gradient(ellipse 125vmax 100vmax at 75% -6%, rgba(184, 134, 11, 0.16) 0%, transparent 68%),
+            radial-gradient(ellipse 115vmax 88vmax at 15% 108%, rgba(212, 175, 55, 0.14) 0%, transparent 68%),
+            radial-gradient(ellipse 90vmax 70vmax at 50% 55%, rgba(212, 175, 55, 0.1) 0%, transparent 72%);
+        animation: smokeDriftMobile 24s ease-in-out infinite;
+    }
+
+    body::after {
+        width: 100%;
+        height: 100%;
+        left: 0;
+        top: 0;
+        opacity: 0.75;
+        background:
+            radial-gradient(ellipse 125vmax 92vmax at 105% 38%, rgba(184, 134, 11, 0.18) 0%, transparent 68%),
+            radial-gradient(ellipse 110vmax 95vmax at -5% 52%, rgba(212, 175, 55, 0.16) 0%, transparent 68%),
+            radial-gradient(ellipse 118vmax 88vmax at 52% 108%, rgba(255, 215, 0, 0.14) 0%, transparent 68%);
+        animation: smokeDriftMobile 30s ease-in-out infinite reverse;
+    }
+
+    main section#home::after {
+        background:
+            radial-gradient(ellipse 90% 70% at 50% 45%, transparent 0%, rgba(0, 0, 0, 0.55) 100%),
+            radial-gradient(ellipse 100vmax 80vmax at -5% 15%, rgba(212, 175, 55, 0.18) 0%, transparent 70%),
+            radial-gradient(ellipse 95vmax 75vmax at 105% 80%, rgba(184, 134, 11, 0.15) 0%, transparent 70%),
+            radial-gradient(ellipse 85vmax 70vmax at 50% 105%, rgba(255, 215, 0, 0.1) 0%, transparent 70%),
+            linear-gradient(180deg, rgba(0, 0, 0, 0.72) 0%, rgba(15, 25, 35, 0.35) 35%, rgba(0, 0, 0, 0.5) 70%, #000 100%),
+            linear-gradient(0deg, rgba(0, 0, 0, 0.65) 0%, transparent 22%);
+    }
+
     .container,
     .container-fluid {
         padding-left: 1rem;
@@ -1273,24 +1344,27 @@ footer a.footer-social:hover {
     }
 
     main section#menu .menu-layout-slider {
-        overflow: hidden;
+        overflow: visible;
         width: 100%;
     }
 
     main section#menu .menu-coverflow {
         height: auto;
-        min-height: 300px;
+        min-height: 320px;
         max-height: none;
-        padding: 0.75rem 0 1rem;
+        overflow: visible;
+        padding: 1.25rem 1rem 2rem;
     }
 
     main section#menu .menu-coverflow-viewport {
         width: 100%;
         max-width: 100%;
+        overflow: visible;
         touch-action: manipulation;
         display: flex;
         align-items: center;
         justify-content: center;
+        padding: 0.5rem 0.75rem 1.25rem;
     }
 
     main section#menu .menu-coverflow-track {
@@ -1323,6 +1397,9 @@ footer a.footer-social:hover {
         transform: none;
         opacity: 1;
         margin: 0;
+        box-shadow:
+            0 12px 36px rgba(0, 0, 0, 0.65),
+            0 4px 16px rgba(0, 0, 0, 0.4);
     }
 
     main section#menu .menu-book-btn {
