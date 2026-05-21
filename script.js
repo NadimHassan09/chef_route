@@ -1,7 +1,8 @@
 // Gold Ashes Animation
 (function() {
     const ashesContainer = document.getElementById('gold-ashes');
-    const particleCount = 60; // Number of gold ash particles
+    const isMobile = window.matchMedia('(max-width: 767.98px)').matches;
+    const particleCount = isMobile ? 24 : 60;
     
     // Create gold ash particles
     function createGoldAsh() {

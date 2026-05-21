@@ -223,11 +223,6 @@ main section#home h1.display-1 {
     line-height: 1.15;
     max-width: 100%;
 }
-@media (max-width: 576px) {
-    main section#home h1.display-1 {
-        font-size: clamp(0.7rem, 3.4vw, 1rem);
-    }
-}
 main section#home h1 span{ 
     color: var(--gold);
 }
@@ -487,6 +482,8 @@ main section#receipt .receipt-summary li {
 }
 main section#receipt .receipt-table-wrap {
     margin-bottom: 1.5rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
 }
 main section#receipt .receipt-table {
     width: 100%;
@@ -1152,4 +1149,224 @@ footer a.footer-social:hover {
     color: var(--gold);
     opacity: 0.85;
     text-decoration: none;
+}
+
+/* ==========================================================================
+   Responsive — tablets & mobile
+   ========================================================================== */
+
+/* Tablet (≤991px) */
+@media (max-width: 991.98px) {
+    main section.my-5 {
+        padding-left: 0.25rem;
+        padding-right: 0.25rem;
+    }
+
+    h2.display-6 {
+        font-size: clamp(1.35rem, 4vw, 1.85rem);
+    }
+
+    main section#concept .card,
+    main section#specialties .card {
+        min-height: auto;
+    }
+
+    main section#about .row,
+    main section#chefs .row {
+        text-align: center;
+    }
+
+    main section#about .button {
+        margin-bottom: 1.5rem;
+    }
+
+    main section#chefs .col-lg-6:first-child {
+        margin-bottom: 1.25rem;
+    }
+
+    main section#payment .payment-card-preview {
+        max-width: 100%;
+        margin-top: 1.5rem;
+    }
+
+    footer .upper-footer .row > [class*="col-"] {
+        text-align: center;
+    }
+}
+
+/* Mobile (≤767px) */
+@media (max-width: 767.98px) {
+    .container,
+    .container-fluid {
+        padding-left: 1rem;
+        padding-right: 1rem;
+    }
+
+    header nav .navbar-brand {
+        font-size: 1.1rem;
+    }
+
+    header nav .navbar-collapse {
+        padding-top: 0.75rem;
+        padding-bottom: 0.5rem;
+    }
+
+    header nav .nav-link {
+        padding: 0.5rem 0;
+        text-align: center;
+    }
+
+    main section#home {
+        min-height: 75vh;
+        padding: 3rem 0 2.5rem;
+    }
+
+    main section#home h1.display-1 {
+        white-space: normal;
+        font-size: clamp(1.35rem, 6.5vw, 1.9rem);
+        line-height: 1.2;
+        padding: 0 0.25rem;
+    }
+
+    main section#home p.fs-5 {
+        max-width: none;
+        font-size: 1rem !important;
+        padding: 0 0.5rem;
+    }
+
+    main section#home .button {
+        font-size: 1rem;
+        padding: 10px 18px;
+    }
+
+    .arrow-down {
+        margin-top: 24px;
+    }
+
+    h2 {
+        margin-bottom: 1.25rem;
+    }
+
+    main section#concept .card,
+    main section#specialties .card {
+        padding: 16px 12px;
+    }
+
+    main section#menu .menu-panel {
+        min-height: auto;
+        padding: 1rem 0.85rem;
+    }
+
+    main section#menu .menu-footer-note {
+        white-space: normal;
+        font-size: 0.65rem;
+    }
+
+    main section#menu .menu-coverflow {
+        height: 50vh;
+        min-height: 280px;
+    }
+
+    main section#menu .menu-coverflow-slide {
+        width: clamp(140px, 62vw, 220px);
+        height: clamp(200px, 45vh, 320px);
+        margin: 0 -1.25rem;
+    }
+
+    main section#menu .menu-book-btn {
+        width: 100%;
+        max-width: 320px;
+        text-align: center;
+    }
+
+    main section#interior .interior-intro {
+        padding: 0 0.5rem;
+        font-size: 0.95rem;
+    }
+
+    main section#receipt .receipt-heading {
+        font-size: clamp(1.1rem, 4.5vw, 1.5rem);
+        text-align: center;
+    }
+
+    main section#receipt .receipt-table {
+        font-size: 0.8rem;
+        min-width: 520px;
+    }
+
+    main section#receipt .receipt-table thead th,
+    main section#receipt .receipt-table tbody td {
+        padding: 0.5rem 0.35rem;
+    }
+
+    main section#receipt .receipt-pay-btn {
+        width: 100%;
+        max-width: 320px;
+    }
+
+    main section#payment .payment-title {
+        font-size: clamp(1.35rem, 5vw, 1.75rem);
+    }
+
+    main section#payment .payment-actions {
+        flex-direction: column;
+        max-width: 100%;
+    }
+
+    main section#payment .payment-btn {
+        flex: 1 1 auto;
+        width: 100%;
+    }
+
+    main section#payment .payment-brands {
+        gap: 0.75rem;
+        font-size: 0.75rem;
+    }
+
+    main section#success .success-container {
+        padding: 1.5rem 1rem 3rem;
+    }
+
+    main section#success .success-icon {
+        font-size: 3rem;
+    }
+
+    footer .footer-bottom p {
+        font-size: 12px !important;
+        padding: 0 0.5rem;
+        line-height: 1.5;
+    }
+}
+
+/* Small mobile (≤575px) */
+@media (max-width: 575.98px) {
+    main section#home h1.display-1 {
+        font-size: clamp(1.2rem, 7vw, 1.65rem);
+    }
+
+    main section#home h1.display-1 span {
+        display: block;
+    }
+
+    .button,
+    .submit-btn,
+    main section#menu .menu-book-btn {
+        display: block;
+        width: 100%;
+        max-width: 280px;
+        margin-left: auto;
+        margin-right: auto;
+        text-align: center;
+        box-sizing: border-box;
+    }
+
+    main section#about .button {
+        display: inline-block;
+        width: auto;
+        max-width: none;
+    }
+
+    main section#payment .payment-amount-row {
+        flex-wrap: wrap;
+    }
 }
