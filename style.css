@@ -500,9 +500,28 @@ main section#receipt .receipt-table-wrap {
 }
 main section#receipt .receipt-table {
     width: 100%;
+    max-width: 100%;
     border-collapse: collapse;
+    table-layout: fixed;
     font-family: var(--font-body);
     font-size: 0.95rem;
+}
+main section#receipt .receipt-table thead th:nth-child(1),
+main section#receipt .receipt-table tbody td:nth-child(1) {
+    width: 30%;
+    word-break: break-word;
+}
+main section#receipt .receipt-table thead th:nth-child(2),
+main section#receipt .receipt-table tbody td:nth-child(2) {
+    width: 14%;
+}
+main section#receipt .receipt-table thead th:nth-child(3),
+main section#receipt .receipt-table tbody td:nth-child(3) {
+    width: 28%;
+}
+main section#receipt .receipt-table thead th:nth-child(4),
+main section#receipt .receipt-table tbody td:nth-child(4) {
+    width: 28%;
 }
 main section#receipt .receipt-table thead th {
     font-family: var(--font-subheading);
@@ -1413,19 +1432,62 @@ footer a.footer-social:hover {
         font-size: 0.95rem;
     }
 
+    main section#receipt .receipt-container {
+        max-width: 100%;
+        padding-left: 0.25rem;
+        padding-right: 0.25rem;
+    }
+
     main section#receipt .receipt-heading {
         font-size: clamp(1.1rem, 4.5vw, 1.5rem);
         text-align: center;
+        padding: 0 0.25rem;
+    }
+
+    main section#receipt .receipt-table-wrap {
+        overflow-x: visible;
+        margin-bottom: 1.25rem;
     }
 
     main section#receipt .receipt-table {
-        font-size: 0.8rem;
-        min-width: 520px;
+        width: 100%;
+        min-width: 0;
+        max-width: 100%;
+        font-size: clamp(0.68rem, 2.6vw, 0.8rem);
     }
 
     main section#receipt .receipt-table thead th,
     main section#receipt .receipt-table tbody td {
-        padding: 0.5rem 0.35rem;
+        padding: 0.55rem 0.2rem;
+        line-height: 1.25;
+    }
+
+    main section#receipt .receipt-table thead th {
+        font-size: clamp(0.62rem, 2.4vw, 0.75rem);
+        letter-spacing: 0.02em;
+    }
+
+    main section#receipt .receipt-table thead th:nth-child(1),
+    main section#receipt .receipt-table tbody td:nth-child(1) {
+        width: 26%;
+        padding-left: 0.15rem;
+    }
+
+    main section#receipt .receipt-table thead th:nth-child(2),
+    main section#receipt .receipt-table tbody td:nth-child(2) {
+        width: 12%;
+    }
+
+    main section#receipt .receipt-table thead th:nth-child(3),
+    main section#receipt .receipt-table tbody td:nth-child(3) {
+        width: 31%;
+        padding-right: 0.15rem;
+    }
+
+    main section#receipt .receipt-table thead th:nth-child(4),
+    main section#receipt .receipt-table tbody td:nth-child(4) {
+        width: 31%;
+        padding-right: 0.15rem;
     }
 
     main section#receipt .receipt-pay-btn {
